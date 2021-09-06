@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <messaging-app></messaging-app>
+</div>
+{% endblock %}
+
+{% block main_vue %}
+<script>
+  let main = new Vue({
+    el: '#app',
+    delimiters: ["[{", "}]"],
+    data: function () {
+      return {
+        media_url: "{{ MEDIA_URL }}"
+      }
+    },
+  });
+</script>
+{% endblock %}
