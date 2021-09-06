@@ -9,16 +9,16 @@ class UserThreadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserThread
-        fields = ['unread', 'deleted', 'user']
+        fields = ['unread', 'deleted', 'user', 'id', 'is_sender']
 
 
 class ThreadSerializer(serializers.ModelSerializer):
-    users = UserThreadSerializer
+    users = UserThreadSerializer(source='userthread_set', many=True)
     message = serializers.SerializerMethodField()
 
     class Meta:
         model = Thread
-        fields = ['subject', 'users', 'message']
+        fields = ['subject', 'users', 'message', 'id']
 
     def get_message(self, obj):
         return MessageSerializer(obj.first_message()).data

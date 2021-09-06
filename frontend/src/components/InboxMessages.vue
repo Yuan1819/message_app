@@ -1,39 +1,43 @@
 <template>
   <div>
+    <p v-if="inbox_msgs.length == 0 && !loading">No messages here</p>
+    <p v-if="loading">Loading...</p>
     <ul class="list-msgs" :class="{showContent: selected_msg != null}">
-      <li v-for="msg in msgs" :key="msg.id" :class="{active: selected_msg == msg, unread: msg.unread}">
+      <li v-for="msg in inbox_msgs" :key="msg.id" :class="{active: selected_msg == msg, unread: msg.unread}">
         <a class="msg-row" href="javascript:void(0)" @click="read_msg(msg)">
-          <span>{{ msg.from}}</span>
-          <p>{{ msg.content }}</p>
-          <p class="date">{{ msg.date}}</p>
+          <span>{{ msg.subject}}</span>
+          <p class="content">{{ msg.message.content }}</p>
+          <p class="date">{{ msg.message.sender.email }}{{ msg.date}}</p>
         </a>
-        <a class="delete" href="javascript:void(0)" @click="delete_msg(msg)">&times;</a>
+        <a class="delete" href="javascript:void(0)" @click="delete_msg(msg)"><span>&times;</span></a>
       </li>
     </ul>
     <div v-if="selected_msg" class="msg-content">
-      <p>{{ selected_msg.from }}</p>
-      {{ selected_msg.content }}
+      <p>From: {{ selected_msg.message.sender.username }} <{{ selected_msg.message.sender.email }}></p>
+      <div class="m-content">{{ selected_msg.message.content }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: "InboxMessages",
   data() {
     return {
       selected_msg: null,
-      msgs: [
-        {from: 'Doan Phi', content: 'Here is content', date: '2021-03-21', id: 1, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content2', date: '2021-04-21', id: 2, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content3', date: '2021-04-21', id: 3, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content4', date: '2021-04-21', id: 4, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content5', date: '2021-04-21', id: 5, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content6', date: '2021-04-21', id: 6, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content7', date: '2021-04-21', id: 7, unread: true},
-        {from: 'Doan Hong Phi', content: 'Here is content8', date: '2021-04-21', id: 8, unread: true},
-      ]
+      loading: false
     }
+  },
+  computed: {
+    ...mapState(['inbox_msgs']),
+  },
+  created() {
+    this.loading = true;
+    this.$store.dispatch('getInboxMsgs').then(() => {
+      this.loading = false
+    });;
   },
   methods: {
     read_msg(msg) {
@@ -41,9 +45,9 @@ export default {
       msg.unread = false;
     },
     delete_msg(msg) {
-      let index = this.msgs.indexOf(msg);
+      let index = this.inbox_msgs.indexOf(msg);
       if (index != -1) {
-        this.msgs.splice(index, 1);
+        this.$store.dispatch('delInboxMsgs', index);
       }
     }
   }
@@ -60,6 +64,9 @@ export default {
 .showContent {
   height: 40vh;
   overflow: auto;
+}
+.m-content {
+  white-space: pre-line;
 }
 .list-msgs {
   list-style: none;
@@ -90,6 +97,12 @@ export default {
         font-size: 80%;
         margin-bottom: 0;
       }
+      p.content {
+        width: 70%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
       .date {
         position: absolute;
         right: 0;
@@ -101,9 +114,19 @@ export default {
       right: 5px;
       top: 15px;
       display: none;
-      font-size: 18px;
-      background-color: #fff;
-      padding: 0 10px 0 3em;
+      text-decoration: none;
+      color: #000;
+      span {
+        font-size: 18px;
+        background-color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
   li:hover {

@@ -8,14 +8,12 @@
         <ul>
           <li :class="{active: selected == 'inbox'}"><a href="javascript:void(0)" @click="selected='inbox'">Inbox</a></li>
           <li :class="{active: selected == 'sent'}"><a href="javascript:void(0)" @click="selected='sent'">Sent</a></li>
-          <li :class="{active: selected == 'trash'}"><a href="javascript:void(0)" @click="selected='trash'">Trash</a></li>
         </ul>
       </div>
       <div class="col-9">
         <inbox-messages v-if="selected == 'inbox'"></inbox-messages>
         <sent-messages v-if="selected == 'sent'"></sent-messages>
-        <trash-messages v-if="selected == 'trash'"></trash-messages>
-        <compose-message v-if="selected == 'compose'"></compose-message>
+        <compose-message v-if="selected == 'compose'" :select-tap="selectTab"></compose-message>
       </div>
     </div>
   </div>
@@ -28,7 +26,7 @@ import TrashMessages from "./TrashMessages";
 import ComposeMessage from "./ComposeMessage";
 export default {
   name: "MessagingApp",
-  components: {ComposeMessage, TrashMessages, SentMessages, InboxMessages},
+  components: {ComposeMessage, SentMessages, InboxMessages},
   data() {
     return {
       selected: 'inbox',
@@ -39,7 +37,9 @@ export default {
     this.$store.dispatch('getUsers');
   },
   methods: {
-
+    selectTab(tab) {
+      this.selected = tab;
+    }
   }
 }
 </script>

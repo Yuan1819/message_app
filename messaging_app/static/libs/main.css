@@ -11255,6 +11255,9 @@ textarea.form-control-lg {
   height: 40vh;
   overflow: auto;
 }
+.m-content[data-v-f933461c] {
+  white-space: pre-line;
+}
 .list-msgs[data-v-f933461c] {
   list-style: none;
   padding-left: 0;
@@ -11284,6 +11287,12 @@ textarea.form-control-lg {
         font-size: 80%;
         margin-bottom: 0;
 }
+.list-msgs li a.msg-row p.content[data-v-f933461c] {
+        width: 70%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+}
 .list-msgs li a.msg-row .date[data-v-f933461c] {
         position: absolute;
         right: 0;
@@ -11294,9 +11303,19 @@ textarea.form-control-lg {
       right: 5px;
       top: 15px;
       display: none;
-      font-size: 18px;
-      background-color: #fff;
-      padding: 0 10px 0 3em;
+      text-decoration: none;
+      color: #000;
+}
+.list-msgs li a.delete span[data-v-f933461c] {
+        font-size: 18px;
+        background-color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 }
 .list-msgs li:hover a.delete[data-v-f933461c] {
     display: block;
@@ -11315,6 +11334,9 @@ textarea.form-control-lg {
   height: 40vh;
   overflow: auto;
 }
+.m-content[data-v-02bce198] {
+  white-space: pre-line;
+}
 .list-msgs[data-v-02bce198] {
   list-style: none;
   padding-left: 0;
@@ -11323,27 +11345,59 @@ textarea.form-control-lg {
 .list-msgs li.active[data-v-02bce198] {
     background-color: #e3e3e3;
 }
+.list-msgs li.unread a[data-v-02bce198] {
+    font-weight: bold;
+}
 .list-msgs li[data-v-02bce198] {
     padding: 5px 10px;
     border-bottom: 1px solid #e3e3e3;
+    position: relative;
 }
-.list-msgs li a[data-v-02bce198] {
+.list-msgs li a.msg-row[data-v-02bce198] {
       display: block;
       text-decoration: none;
       position: relative;
 }
-.list-msgs li a span[data-v-02bce198] {
+.list-msgs li a.msg-row span[data-v-02bce198] {
         color: #000;
 }
-.list-msgs li a p[data-v-02bce198] {
+.list-msgs li a.msg-row p[data-v-02bce198] {
         color: #000;
         font-size: 80%;
         margin-bottom: 0;
 }
-.list-msgs li a .date[data-v-02bce198] {
+.list-msgs li a.msg-row p.content[data-v-02bce198] {
+        width: 70%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+}
+.list-msgs li a.msg-row .date[data-v-02bce198] {
         position: absolute;
         right: 0;
         top: 15px;
+}
+.list-msgs li a.delete[data-v-02bce198] {
+      position: absolute;
+      right: 5px;
+      top: 15px;
+      display: none;
+      text-decoration: none;
+      color: #000;
+}
+.list-msgs li a.delete span[data-v-02bce198] {
+        font-size: 18px;
+        background-color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+.list-msgs li:hover a.delete[data-v-02bce198] {
+    display: block;
 }
 .list-msgs li[data-v-02bce198]:last-child {
     border-bottom: none;

@@ -13,7 +13,11 @@ class Thread(models.Model):
 
     @classmethod
     def inbox(cls, user):
-        return cls.objects.filter(userthread__user=user, userthread__deleted=False)
+        return cls.objects.filter(userthread__user=user, userthread__deleted=False, userthread__is_sender=False)
+
+    @classmethod
+    def sent(cls, user):
+        return cls.objects.filter(userthread__user=user, userthread__deleted=False, userthread__is_sender=True)
 
     @classmethod
     def deleted(cls, user):

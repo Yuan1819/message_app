@@ -16,9 +16,10 @@ class MessagesInbox(ListAPIView):
 
 
 class MessagesSent(ListAPIView):
+    serializer_class = ThreadSerializer
 
     def get_queryset(self):
-        return Thread.inbox(self.request.user)
+        return Thread.sent(self.request.user)
 
 
 class SendMessage(APIView):

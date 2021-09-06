@@ -41,6 +41,12 @@ import {mapState} from "vuex";
 
 export default {
   name: "ComposeMessage",
+  props: {
+    selectTap: {
+      type: Function,
+      required: true
+    }
+  },
   data() {
     return {
       msg: {
@@ -74,7 +80,9 @@ export default {
       e.preventDefault();
       this.axios.post('/api/message/send/', this.msg).then((res) => {
         alert("Your message is sent");
+        this.$store.dispatch('getSentMsgs');
         this.msg = {};
+        this.selectTap('inbox');
       }).catch(() => {
         alert('error')
       })
