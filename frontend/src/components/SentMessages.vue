@@ -59,10 +59,7 @@ export default {
       return data.join(', ')
     },
     delete_msg(msg) {
-      let index = this.sent_msgs.indexOf(msg);
-      if (index != -1) {
-        this.$store.dispatch('delSentMsgs', index);
-      }
+      this.$store.dispatch('delSentMsgs', msg);
     }
   }
 }

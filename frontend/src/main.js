@@ -14,6 +14,7 @@ Vue.use(VueCookies);
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = true
 
+
 const Components = {
     HelloWorld,
     MessagingApp,

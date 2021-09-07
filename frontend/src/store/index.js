@@ -4,6 +4,7 @@ import axios from 'axios';
 
 Vue.use(Vuex)
 
+
 const vStore = new Vuex.Store({
   state: {
     users: [],
@@ -33,6 +34,7 @@ const vStore = new Vuex.Store({
   },
   actions: {
     getUsers(context) {
+      axios.defaults.headers.common['X-CSRFToken'] = document.querySelector('[name=csrfmiddlewaretoken]').value;
       axios.get('/api/users').then((res) => {
         context.commit('setUsers', res.data);
       })
@@ -47,16 +49,26 @@ const vStore = new Vuex.Store({
         context.commit('setInboxMsg', res.data);
       })
     },
-    delInboxMsgs(context, index) {
-      context.commit('delInboxMsg', index)
+    delInboxMsgs(context, msg) {
+      let index = context.state.inbox_msgs.indexOf(msg);
+      if (index != -1) {
+        context.commit('delInboxMsg', index)
+        axios.post(`/api/messages/inbox/${msg.id}/delete/`).then((res) => {
+        })
+      }
     },
     getSentMsgs(context) {
       return axios.get('/api/messages/sent/').then((res) => {
         context.commit('setSentMsg', res.data);
       })
     },
-    delSentMsgs(context, index) {
-      context.commit('delSentMsg', index)
+    delSentMsgs(context, msg) {
+      let index = context.state.sent_msgs.indexOf(msg);
+      if (index != -1) {
+        context.commit('delSentMsg', index)
+        axios.post(`/api/messages/sent/${msg.id}/delete/`).then((res) => {
+        })
+      }
     }
   },
   modules: {

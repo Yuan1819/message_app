@@ -45,10 +45,7 @@ export default {
       msg.unread = false;
     },
     delete_msg(msg) {
-      let index = this.inbox_msgs.indexOf(msg);
-      if (index != -1) {
-        this.$store.dispatch('delInboxMsgs', index);
-      }
+      this.$store.dispatch('delInboxMsgs', msg);
     }
   }
 }
