@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit="handleSubmit" class="needs-validation" novalidate>
+    <form @submit="handleSubmit" class="needs-validation" novalidate ref="form">
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">Subject</label>
         <div class="col-sm-10">
@@ -13,7 +13,7 @@
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">To:</label>
         <div class="col-sm-10">
-          <select class="form-control" required  v-model="msg.to">
+          <select class="form-control" required v-model="msg.to">
             <option value="" disabled selected>---</option>
             <option v-for="user in users" v-show="user.id != me.id" :value="user.username">{{user.username }} - {{ user.email }}</option>
           </select>
@@ -78,6 +78,9 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
+      if (!this.$refs.form.checkValidity()) {
+        return
+      }
       this.axios.post('/api/message/send/', this.msg).then((res) => {
         alert("Your message is sent");
         this.$store.dispatch('getSentMsgs');

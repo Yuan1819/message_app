@@ -12,9 +12,14 @@ This is a simple messaging app
 
 Setup project
 --------------
+* Update python version in Pipfile (it should be same as your python version)
 * Run this command to install requirement packages:
 
     $ pipenv install
+
+* Run this command to activate python environment:
+
+    $ pipenv shell
 
 * Update DATABASE_URL in **.env** file like this format:
 
@@ -29,6 +34,7 @@ Note: <database_name> must be exist in database server before you run next comma
 * To compile vue components, run this command::
 
     $ cd frontend
+    $ npm install
     $ npm run build
 
 * To run local server, use this command::
