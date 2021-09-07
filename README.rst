@@ -10,6 +10,32 @@ This is a simple messaging app
      :target: https://github.com/ambv/black
      :alt: Black code style
 
+Setup project
+--------------
+* Run this command to install requirement packages:
+
+    $ pipenv install
+
+* Update DATABASE_URL in **.env** file like this format:
+
+    postgres://<user>:<password>@<host>:<port>/<database_name>
+
+Note: <database_name> must be exist in database server before you run next command
+
+* Create database tables, use this command::
+
+    $ python manage.py migrate
+
+* To compile vue components, run this command::
+
+    $ cd frontend
+    $ npm run build
+
+* To run local server, use this command::
+
+    $ python manage.py runserver --settings=config.settings.local
+
+
 Settings
 --------
 
